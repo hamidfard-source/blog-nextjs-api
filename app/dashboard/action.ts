@@ -11,7 +11,7 @@ export const createPost = async (previousState: any, formData: FormData): Promis
     const title = formData.get('title');
     // const tag = formData.get('tag');
     const content = formData.get('content');
-    console.log(image);
+    console.log('image : ',image);
 
 
     try {
@@ -19,7 +19,7 @@ export const createPost = async (previousState: any, formData: FormData): Promis
         const uploadImageResponse = await fetch('http://localhost:3000/api/upload', {
             method: 'POST',
             headers: {
-                'Content-Type': 'image/png', // Adjust based on the image type
+                'Content-Type': 'image/*', // Adjust based on the image type
             },
             body: image,
         })

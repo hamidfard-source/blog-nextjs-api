@@ -3,6 +3,7 @@ import { Roboto_Mono, Roboto, Vazirmatn } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/context/theme-context";
+import ToastProvider from "@/components/ui/toastProvider";
 
 const roboto = Roboto({
   weight: ['100', '400', '700'],
@@ -40,6 +41,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <Navbar />
+          <ToastProvider />
           {children}
         </ThemeProvider>
       </body>

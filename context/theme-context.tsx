@@ -1,32 +1,32 @@
 'use client'
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useLayoutEffect } from 'react';
 
-type Theme = 'light' | 'dark';
+type isDark = boolean;
 type ThemeContextType = {
-  theme: Theme;
+  theme: isDark;
   toggleTheme: () => void;
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<isDark>(true);
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+    setTheme((prevTheme) => (prevTheme === false ? true : false));
   };
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
+    const savedTheme = localStorage.getItem('theme') as isDark | null;
     if (savedTheme) {
       setTheme(savedTheme);
     }
   }, []);
   
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
+  useLayoutEffect(() => {
+    localStorage.setItem("theme", theme ? "dark": "light")
     document.documentElement.classList.remove("light", "dark");
-    document.documentElement.classList.add(theme);
+    document.documentElement.classList.add(theme ? "dark": "light");
   }, [theme]);
 
 

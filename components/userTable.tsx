@@ -7,10 +7,12 @@ interface TableProps {
 }
 
 const UserTable: React.FC<TableProps> = ({ data }) => {
+    console.log(data)
   return (
     <div className="overflow-x-auto">
       <div>
-
+      
+        
       </div>
       <table className="table-fixed ">
         <thead className=''>
