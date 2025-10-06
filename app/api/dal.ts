@@ -11,7 +11,7 @@ export const verifySession = cache(async () => {
 
     console.log('verifySession() Part| dal.ts ==>', session)
 
-    if(!session?.userid){
+    if(!session?.userId){
         redirect('/login')
     }
 
@@ -25,20 +25,20 @@ export function hasRole(session: SessionPayload, allowedRoles: string[]): boolea
 }
 
 // helper functions for checking new roles
-export const isOwner = cache(async () => {
+export const isOwner = async () => {
     const session = await verifySession();
     return session.role === "owner";
-})
+}
 
-export const isAdmin = cache(async () => {
+export const isAdmin = async () => {
     const session = await verifySession();
     return session.role === 'admin' || session.role === 'owner';
-})
+}
 
-export const isUser = cache(async () => {
+export const isUser = async () => {
     const session = await verifySession();
     return session.role === 'user';
-})
+}
 
 // ✅ middleware برای API routes
 export async function requireRole(allowedRoles: string[]) {
