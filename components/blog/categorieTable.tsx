@@ -2,21 +2,15 @@
 
 import { categoryType } from '@/app/db/schema';
 import AlertDialog from '../ui/alertDialog';
+import { formatDate } from '@/lib/utils';
 
 const CategoriesTable = ({ data }: { data: categoryType[] }) => {
-  
-
-  // Format date to readable string
-  const formatDate = (dateString: string) => {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
 
   // Column definitions
   const columns = [
     { key: 'id', label: '' },
     { key: 'name', label: 'Category Name' },
-    { key: 'createdAt', label: 'Created At', format: formatDate },
+    { key: 'createdAt', label: 'Created At', format: (date:string)=>formatDate(date)},
   ];
 
   return (
