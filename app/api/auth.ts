@@ -33,12 +33,16 @@ export async function  signup(state: FormState, formData: FormData) {
         return { message: "user already Exists" }
     }
 
-    const newUser = insertUser({ username: username, password: hashedPassword, role: 'admin' })
+    //first member is 'Owner' and other is 'User'
+    const userCount = await db.select().from(usersTable);
+    const role = userCount.length === 0 ? 'owner' : 'user';
+
+    const newUser = insertUser({ username, password: hashedPassword, role })
     console.log(newUser);
 
 
 
-    await createSession(username)
+    await createSession(username,role)
 
     redirect('/dashboard')
 }
@@ -54,9 +58,7 @@ export async function login(state: FormState, formData: FormData) {
         }
     }
     const { username, password } = validatedFields.data
-    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // const user = db.find((user) => user.userName === username);
     const user = await db.select().from(usersTable).where(eq(usersTable.username, username))
     if (user.length === 0) {
         return { error: "User not found" };
@@ -67,7 +69,7 @@ export async function login(state: FormState, formData: FormData) {
         return { error: 'wrong data , try again' }
     }
 
-    await createSession(username)
+    await createSession(user[0].id.toString(), user[0].role as 'owner' | 'admin' | 'user')
 
     redirect('/dashboard')
 }

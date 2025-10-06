@@ -3,9 +3,9 @@ import { SignJWT, jwtVerify } from 'jose'
 import { SessionPayload } from './definitions'
 import { cookies } from 'next/headers'
 
-export async function createSession(userId: string) {
+export async function createSession(userId: string, role: 'owner' | 'admin' | 'user') {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  const session = await encrypt({ userId, expiresAt })
+  const session = await encrypt({ userId, role, expiresAt: expiresAt.getTime() })
   const cookieStore = await cookies()
 
   cookieStore.set('session', session, {
@@ -29,6 +29,7 @@ export async function updateSession() {
   const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
 
   const cookieStore = await cookies()
+
   cookieStore.set('session', session, {
     httpOnly: true,
     secure: true,
@@ -39,13 +40,15 @@ export async function updateSession() {
 }
 
 export async function deleteSession() {
-  const cookieStore = await cookies()
-  cookieStore.delete('session')
+  const cookieStore = await cookies();
+
+  cookieStore.delete('session');
 }
 
 
-const secretKey = process.env.SESSION_SECRET
-const encodedKey = new TextEncoder().encode(secretKey)
+const secretKey = process.env.SESSION_SECRET;
+
+const encodedKey = new TextEncoder().encode(secretKey);
 
 export async function encrypt(payload: SessionPayload): Promise<string> {
   return new SignJWT(payload)
@@ -62,6 +65,6 @@ export async function decrypt(session: string | undefined = '') {
     })
     return payload
   } catch (error) {
-    return 
+    return null
   }
 }

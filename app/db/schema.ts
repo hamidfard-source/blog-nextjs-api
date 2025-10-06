@@ -7,7 +7,7 @@ export const usersTable = pgTable("users", {
   id: uuid('id').defaultRandom().primaryKey(),
   username: varchar({ length: 16 }).notNull().unique(),
   password: varchar('password').notNull(),
-  role: rolesEnum('role').default('user'),
+  role: rolesEnum('role').default('user').notNull(),
   createdAt: timestamp({ mode: 'date' }).defaultNow().notNull(),
   updateAt: timestamp('update_at', { mode: 'date' }).defaultNow().notNull(),
 });
