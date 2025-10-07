@@ -1,4 +1,5 @@
 'use client'
+import { Shapes, SquarePen, Users } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -20,13 +21,13 @@ const Sidebar = () => {
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white-smoke">Dashboard</h2>
           <nav className="mt-6">
             <Link href="/dashboard/posts" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
-              Posts
+              <SquarePen className='inline'/> <h2 className='inline '>Posts</h2> 
             </Link>
             <Link href="/dashboard/alluser" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
-              Users
+              <Users className='inline'/> <h2 className='inline'>Users</h2>
             </Link>
             <Link href="/dashboard/categories" className="block py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
-              Categories
+              <Shapes className='inline'/> <h2 className='inline'>Categories</h2>
             </Link>
           </nav>
         </div>
