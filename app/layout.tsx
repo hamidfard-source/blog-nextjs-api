@@ -35,9 +35,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="min-w-fit">
       <body
-        className={`${roboto.variable} ${robotoMono.variable} ${vazirmatn.variable} font-vazirmatn antialiased bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
+        className={`
+          ${roboto.variable} ${robotoMono.variable} ${vazirmatn.variable}
+          font-vazirmatn antialiased bg-gray-100
+          dark:bg-gray-900 text-gray-900 dark:text-gray-100
+        `}
       >
         <ThemeProvider>
           <Navbar />

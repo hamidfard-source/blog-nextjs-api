@@ -1,10 +1,19 @@
 import Sidebar from "@/components/sideBar";
+import { verifySession } from "../api/dal";
+import { redirect } from "next/navigation";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({ children }: { children: React.ReactNode }) {
+  const session = await verifySession();
+
+  if (!session) redirect('/login');
+
   return (
-    <>
+    <main className="flex flex-row min-h-[calc(100dvh-4rem)]">
       <Sidebar />
-      <main className="grid place-items-stretch max-w-[calc(100%-16rem)] ml-auto">{children}</main>
-    </>
+
+      <section className="flex-1 border-blue-400 border border-dotted">
+        {children}
+      </section>
+    </main>
   )
 }
