@@ -15,13 +15,8 @@ export async function insertUser(data: DataType) {
         password : data.password,
         role : data.role  ,
     }
-    // const user:DataType = {
-    //     username: data.username,
-    //     password : data.password,
-    //     role : data.role,
-    // }
+
     await db.insert(usersTable).values(user)
-    console.log('inserted in db ... 🤵‍♂️')
 }
 
 export async function setRole (userRole: "owner"|"admin"|"user" , userId : number){
@@ -34,7 +29,4 @@ export async function setRole (userRole: "owner"|"admin"|"user" , userId : numbe
     }
 }  
 
-// export async function getID(username:string){
-//     await db.select().
-// }
 export const allUser = await db.select().from(usersTable);
