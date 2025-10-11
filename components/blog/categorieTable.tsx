@@ -1,7 +1,7 @@
 "use server"
 
 import { categoryType } from '@/app/db/schema';
-import AlertDialog from '../ui/alertDialog';
+import { DeleteAlertDialog } from '../ui/alertDialog';
 import { formatDate } from '@/lib/utils';
 
 const CategoriesTable = ({ data }: { data: categoryType[] }) => {
@@ -44,7 +44,7 @@ const CategoriesTable = ({ data }: { data: categoryType[] }) => {
                 </td>
               ))}
               <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <AlertDialog buttonText='Delete Category'/>
+                <DeleteAlertDialog buttonText='Delete Category'/>
               </td>
             </tr>
           ))}

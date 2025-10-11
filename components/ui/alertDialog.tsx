@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { useState } from "react";
 
-export default ({
+export const DeleteAlertDialog = ({
   itemId,
   buttonStyle,
   buttonText = "Delete",
