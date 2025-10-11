@@ -32,4 +32,36 @@ export const UpdateRole = async (id: any, role: string):Promise<UpdateRoleRespon
       console.error('Error in UpdateRole:', error);
       throw error; 
     }
+};
+
+interface DeleteUserResponse {
+  statusData: number;
+  data: {
+    message: string;
+    result: any;
   };
+}
+
+export const DeleteUser = async (id: any): Promise<DeleteUserResponse> => {
+  try {
+    const response = await fetch('http://localhost:3000/api/users', {
+      method: 'DELETE',
+      headers: { 'content-Type': 'application/json' },
+      body: JSON.stringify({ id })
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    };
+
+    const statusData = response.status;
+    const data = await response.json();
+
+    revalidateTag('users-data');
+
+    return { statusData, data }
+  } catch (error) {
+    console.error('Error in DeleteUser:', error);
+    throw error;
+  }
+}
