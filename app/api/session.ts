@@ -3,9 +3,9 @@ import { SignJWT, jwtVerify } from 'jose'
 import { SessionPayload } from './definitions'
 import { cookies } from 'next/headers'
 
-export async function createSession(userId: string, role: 'owner' | 'admin' | 'user') {
+export async function createSession(userId: string, userName : string, role: 'owner' | 'admin' | 'user') {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  const session = await encrypt({ userId, role, expiresAt: expiresAt.getTime() })
+  const session = await encrypt({ userId, userName, role, expiresAt: expiresAt.getTime() })
   const cookieStore = await cookies()
 
   cookieStore.set('session', session, {

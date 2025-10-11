@@ -38,11 +38,11 @@ export async function  signup(state: FormState, formData: FormData) {
     const role = userCount.length === 0 ? 'owner' : 'user';
 
     const newUser = insertUser({ username, password: hashedPassword, role })
-    console.log(newUser);
 
 
+    const user = await db.select().from(usersTable).where(eq(usersTable.username, username))
 
-    await createSession(username,role)
+    await createSession(user[0]?.id,username,role)
 
     redirect('/dashboard')
 }
@@ -69,7 +69,7 @@ export async function login(state: FormState, formData: FormData) {
         return { error: 'wrong data , try again' }
     }
 
-    await createSession(user[0].id.toString(), user[0].role as 'owner' | 'admin' | 'user')
+    await createSession(user[0].id.toString(), username ,user[0].role as 'owner' | 'admin' | 'user')
 
     redirect('/dashboard')
 }
