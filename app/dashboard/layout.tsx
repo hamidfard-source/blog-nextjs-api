@@ -8,10 +8,10 @@ export default async function Layout({ children }: { children: React.ReactNode }
   if (!session) redirect('/login');
 
   return (
-    <main className="flex flex-row min-h-[calc(100dvh-4rem)]">
+    <main className="flex flex-row items-stretch justify-center min-h-[calc(100dvh-4rem)]">
       <Sidebar />
 
-      <section className="flex-1 border-blue-400 border border-dotted">
+      <section className="lg:max-w-5xl xl:max-w-5xl 2xl:max-w-6xl">
         {children}
       </section>
     </main>

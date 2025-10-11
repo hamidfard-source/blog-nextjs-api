@@ -27,9 +27,11 @@ const Page = async () => {
 
     return (
         <div className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex items-start justify-center h-screen sm:pt-6 lg:p-8">
+
             <div className="w-2/3 lg:ml-auto">
                 <CreatePostForm />
             </div>
+
             <div className="grid grid-cols-1 mid:grid-cols-3 gap-1">
 
                 <div className="bg-white p-6 rounded-lg shadow">

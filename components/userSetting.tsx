@@ -3,10 +3,14 @@
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import Modal from "./modal";
-import { UpdateRole } from "@/app/dashboard/alluser/actions";
+import { DeleteUser, UpdateRole } from "@/app/dashboard/alluser/actions";
+import { Button } from "./ui/button";
+import { UserRoundX } from "lucide-react";
+import { toast } from "react-toastify";
 
 interface data {
     id: number;
+    username:string
     role: roleEnum;
     updatedAt: Date | undefined;
 }
@@ -17,9 +21,7 @@ enum roleEnum {
     user = 'user',
 }
 
-
-
-const UserSetting: React.FC<data> = ({ id, role, updatedAt }) => {
+const UserSetting: React.FC<data> = ({ id, username , role, updatedAt }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [valueRole, setValueRole] = useState<roleEnum>(role);
     const [statusData,setStatusData] = useState<number|null>(null)
@@ -37,6 +39,19 @@ const UserSetting: React.FC<data> = ({ id, role, updatedAt }) => {
         }
     }
 
+    const handleDelete = async(id : number)=>{
+        try {
+            const res = await DeleteUser(id);
+            if(res.statusData === 200){
+                toast.success(res.data.message || "User deleted successfully")
+            } else {
+                toast.error(res.data.message || "Failed to delete user")
+            }
+        } catch {
+            toast.error("Error deleting user")
+        }
+    }
+
     return (
         <>
             <button onClick={openModal} className=' hover:cursor-pointer'>
@@ -45,15 +60,25 @@ const UserSetting: React.FC<data> = ({ id, role, updatedAt }) => {
 
             <Modal isOpen={isModalOpen} onClose={closeModal} >
                 <div className="">
-                    <div className=""> id {id}</div>
+                    <div className="text-xl dark:text-slate-200"> Name: <span className="font-bold dark:text-white">{username}</span></div>
                     <div className={`${statusData === 200 ? 'text-emerald-400' : 'text-red-300'}`}> {statusData}</div>
+                    <hr className="my-3" />
+                    <select value={valueRole} onChange={handleSelectChange} name="changeRole" className='capitalize cursor-pointer text-slate-200 bg-slate-900 p-2' id={`${id}`}>
+                        <option hidden >---</option>dmin
 
-                    <select value={valueRole} onChange={handleSelectChange} name="changeRole" className=' cursor-pointer text-slate-200 bg-slate-900 p-2' id={`${id}`}>
-                        <option hidden >---</option>
                         <option value={roleEnum.owner}>owner</option>
                         <option value={roleEnum.admin}>admin</option>
                         <option value={roleEnum.user}>user</option>
                     </select>
+                    <hr className="my-3" />
+                    <Button
+                        onClick={()=>handleDelete(id)}
+                        variant="destructive"
+                        color="red"
+                        size="lg"
+                    >
+                        <UserRoundX className="inline align-middle" /> Delete User
+                    </Button>
                 </div>
             </Modal>
         </>

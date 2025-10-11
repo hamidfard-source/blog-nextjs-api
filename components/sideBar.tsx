@@ -41,7 +41,7 @@ const Sidebar = () => {
 
       <aside
         className={`
-          fixed inset-y-0 left-0 z-40 w-64 bg-slate-900
+          fixed inset-y-0 left-0 z-40 max-w-64 bg-slate-900
           bg-white shadow-xl
           flex flex-col
           lg:translate-x-0

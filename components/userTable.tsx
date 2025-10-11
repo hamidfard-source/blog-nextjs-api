@@ -1,6 +1,7 @@
 'use client'
 import { usersType } from '@/app/db/schema';
 import UserSetting from './userSetting';
+import { Badge } from './ui/badge';
 
 interface TableProps {
   data: usersType[];
@@ -10,11 +11,7 @@ const UserTable: React.FC<TableProps> = ({ data }) => {
     console.log(data)
   return (
     <div className="overflow-x-auto">
-      <div>
-      
-        
-      </div>
-      <table className="table-fixed ">
+      <table className="mx-auto">
         <thead className=''>
           <tr className='font-thin'>
             <th className="py-2 px-4 border-b"> </th>
@@ -26,15 +23,19 @@ const UserTable: React.FC<TableProps> = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item, index) => (
+          {data.map(({ id, username, role, updateAt, createdAt }, index) => (
             <tr key={index} className="">
               <td className='py-2 px-4 border-b'> {index + 1}</td>
-              <td className="py-2 px-4 border-b">{item.username}</td>
-              <td className="py-2 px-4 border-b"><div className='font-mono text-sm bg-opacity-40 bg-red-700 text-slate-200 px-2 rounded-lg'>{item.role}</div></td>
-              <td className="py-2 px-4 border-b">{item.createdAt.toLocaleString()}</td>
-              <td className="py-2 px-4 border-b">{item.updateAt?.toLocaleString() ?? '---'}</td>
+              <td className="py-2 px-4 border-b font-bold">{username}</td>
               <td className="py-2 px-4 border-b">
-                <UserSetting role={item.role } id={item.id} updatedAt={item.updateAt}/>
+                <Badge variant='default' className='font-robotoMono font-medium'>
+                  {role}
+                </Badge>
+              </td>
+              <td className="py-2 px-4 border-b">{new Date(createdAt)?.toLocaleString()}</td>
+              <td className="py-2 px-4 border-b">{new Date(updateAt)?.toLocaleString() ?? '---'}</td>
+              <td className="py-2 px-4 border-b">
+                <UserSetting username={username} role={role} id={id} updatedAt={updateAt}/>
               </td>
             </tr>
           ))}

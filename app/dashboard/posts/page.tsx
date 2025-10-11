@@ -34,8 +34,7 @@ export default async function page() {
     })
   const result = await response.json()
   return (
-
-    <main className="max-w-screen-xl border-2 border-red-500 grid place-items-center">
+    <main className="">
       <div className="flex flex-row gap-x-3 p-3">
         <SelectContain key='categories'>
           <SelectItem value="javascript">javascript</SelectItem>
